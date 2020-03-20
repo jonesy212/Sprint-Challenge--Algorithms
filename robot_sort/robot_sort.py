@@ -97,33 +97,45 @@ class SortingRobot:
         print("can move right", self.can_move_right())
         print("compare item?", self.compare_item())
         
-        # while compare_item() is not None:
-        # if self.compare_item() and self.swap_item() is None:
-        #     False
 
-       #while moving right is true
-        while self.can_move_right():
-            #if can't move right end/break
-            if self.can_move_right == False:
+        self.swap_item()
+        while True:
+            while self.move_right():
+                if self.compare_item() > 0:
+                    self.swap_item()
+                    break
+            if self.compare_item() is None and self.can_move_right is False:
+                self.swap_item()
+
+            while self.move_left():
+                if self.compare_item() is None:
+                    self.swap_item()
+                    self.move_right()
+                    self.swap_item()
+                    break
+
+        #swap so the robot is holding an item instead of none
+        self.swap_item()
+        while True:
+            #move to the right swaping if number is smaller
+            while self.move_right():
+                #if compared item is greater than 0
+                if self.compare_item() > 0:
+                    #swap item if bigger than 0
+                    self.swap_item()
+            #should be able to move all the way right
+            #should be holding the smallest number
+            if self.compare_item() is None and self.can_move_right() is False:
+                self.swap_item()
                 break
-            if self.compare_item() == None:
-                self.swap_item
-            #compare if you move right
-            
-            #compare item holding and item in position
-            #if item being held is larger, move right
-            #if item being held is smalle, swap
-
-            # self.move_right()
-            # self.swap_item()
-        #     print("holding an item 2?", self.compare_item())
-        #     if self.can_move_right() == False:
-        #         break
-        # if self.can_move_left():
-        #     self.move_left()
-        #     self.swap_item()
-
-            
+        
+            #move the smallest number, back to where None is
+            while self.move_left():
+                if self.compare_item() is None:
+                    self.swap_item()
+                    self.move_right()
+                    self.swap_item()
+                    break
             print("can move left 2", self.can_move_left())
             print("can move right 2", self.can_move_right())
             print("holding an item?", self.compare_item())
